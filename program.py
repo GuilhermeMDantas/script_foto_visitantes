@@ -55,8 +55,26 @@ while True:
         # cv.waitKey(1)
         cv.destroyWindow("Foto")
 
-        # Salva a imagem no running directory
-        cv.imwrite(path.dirname(path.abspath(__file__)) + "\\foto.jpg", frame)
+        # Se já existe uma foto no diretório
+        if path.isfile(path.dirname(path.abspath(__file__)) + '\\foto.jpg'):
+            for i in range(2, 101):
+
+                # Se o caminho não existe
+                if not path.isfile(path.dirname(path.abspath(__file__)) + '\\foto{}.jpg'.format(i)):
+                    # Salva
+                    cv.imwrite(path.dirname(path.abspath(__file__)) + "\\foto{}.jpg".format(i), frame)
+                    break # sai do loop
+
+                # Chegou na última iteração
+                # Então dá overwrite no último arquivo
+                if i == 100:
+                    cv.imwrite(path.dirname(path.abspath(__file__)) + '\\foto100.jpg', frame)
+                    break
+
+
+        else:
+            # Salva a imagem no running directory
+            cv.imwrite(path.dirname(path.abspath(__file__)) + "\\foto.jpg", frame)
         break
     else: # Não
         
